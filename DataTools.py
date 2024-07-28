@@ -37,7 +37,7 @@ class DataTools():
         
 
     async def response_send_data (self, method: str, data_request: dict, auth: str = None, private_key: str = None, has_tmp: bool = False, url = None) -> tuple:
-        auth = self.creator_auth if auth == None else auth
+        auth = self.creator_auth() if auth == None else auth
         url = self.url[0] if url == None else url
         encoding = Cryption(auth = auth, private_key = private_key)
         status  = "tmp_session" if has_tmp == True else "auth"
@@ -48,4 +48,4 @@ class DataTools():
             auth = encoding.changeAuthType(encoding.auth)
             data_json["sign"] = encoding.makeSignFromData(data_json["data_enc"])
             response_ = await self.send_data(url=url,data=data_json, encoding=encoding)    
-        return response_, auth            
+        return response_         
