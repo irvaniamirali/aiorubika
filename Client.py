@@ -11,16 +11,17 @@ class Client:
             try:
                 with codecs.open(f"{session_name}.json", "r", encoding="utf-8") as file:
                     data_session = json.load(file)
-                    self.auth = data_session["auth"]
-                    self.private_key = data_session["private_key"]
+                    self.auth = data_session[1]
+                    self.private_key = data_session[1]
             except:
                 self.login = Login(self.session_name)
                 asyncio.run(self.login.login())       
-                self.auth = None
-                self.private_key = None
+                with codecs.open(f"{session_name}.json", "r", encoding="utf-8") as file:
+                    data_session = json.load(file)
+                self.auth = data_session[1]
+                self.private_key = data_session[1]
         else:
             self.auth = auth
             self.private_key = private_key
 a = Client(session_name="taha")        
-# print(asyncio.run(a))
         
